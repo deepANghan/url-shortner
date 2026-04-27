@@ -12,7 +12,16 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "@types/express": "^5.0.6",
-    "express": "^5.2.1"
+    "base62": "^2.0.2",
+    "express": "^5.2.1",
+    "nanoid": "^5.1.9",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "prisma": "^7.8.0"
   }
 }
