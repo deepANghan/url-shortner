@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shorten long URLs into clean, shareable short links instantly." />
+  <title>Snip — URL Shortener</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>" />
+</head>
+<body>
+  <!-- Ambient floating orbs -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app-container">
+    <!-- Hero -->
+    <header class="hero">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg>
+      </div>
+      <h1>Make it <span class="gradient-text">snappy</span></h1>
+      <p>Shorten long URLs into clean, shareable links in seconds.</p>
+    </header>
+
+    <!-- Main Card -->
+    <main class="card" id="main-card">
+      <!-- Tabs -->
+      <div class="tabs" role="tablist">
+        <button class="tab-btn active" data-tab="shorten" role="tab" aria-selected="true" id="tab-shorten">Shorten</button>
+        <button class="tab-btn" data-tab="lookup" role="tab" aria-selected="false" id="tab-lookup">Lookup</button>
+      </div>
+
+      <!-- Shorten Panel -->
+      <div class="tab-panel active" id="panel-shorten" role="tabpanel" aria-labelledby="tab-shorten">
+        <form id="shorten-form" autocomplete="off">
+          <div class="form-group">
+            <label for="shorten-input">Paste your long URL</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                type="url"
+                id="shorten-input"
+                placeholder="https://example.com/very/long/url..."
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="shorten-btn">
+            <span class="spinner"></span>
+            <span class="btn-label">Shorten URL</span>
+          </button>
+        </form>
+
+        <!-- Shorten Result -->
+        <div class="result-box" id="shorten-result">
+          <span class="result-label" id="shorten-result-label"></span>
+          <div class="result-content">
+            <span class="result-url" id="shorten-result-url"></span>
+            <span class="result-error-msg" id="shorten-result-error" style="display:none"></span>
+            <button class="btn-copy" id="copy-btn" title="Copy to clipboard" style="display:none">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lookup Panel -->
+      <div class="tab-panel" id="panel-lookup" role="tabpanel" aria-labelledby="tab-lookup">
+        <form id="lookup-form" autocomplete="off">
+          <div class="form-group">
+            <label for="lookup-input">Enter short code</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </svg>
+              <input
+                type="text"
+                id="lookup-input"
+                placeholder="e.g. abc123"
+                required
+              />
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" id="lookup-btn">
+            <span class="spinner"></span>
+            <span class="btn-label">Lookup URL</span>
+          </button>
+        </form>
+
+        <!-- Lookup Result -->
+        <div class="result-box" id="lookup-result">
+          <span class="result-label" id="lookup-result-label"></span>
+          <div class="lookup-details" id="lookup-details" style="display:none">
+            <div class="detail-row">
+              <span class="detail-label">Original URL</span>
+              <span class="detail-value" id="lookup-original-url"></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Short Code</span>
+              <span class="detail-value" id="lookup-shorten-url"></span>
+            </div>
+          </div>
+          <span class="result-error-msg" id="lookup-result-error" style="display:none"></span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Built with ☕ — URL Shortener</p>
+    </footer>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
