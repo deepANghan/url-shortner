@@ -72,6 +72,7 @@ async function postURL(req : Request, res : Response) {
     }
 
     try {
+
         const urlObj = await shortenUrl(originalUrl);
         
         res.status(201).json({

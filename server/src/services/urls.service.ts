@@ -1,5 +1,6 @@
 import { dbClient } from "../config/client.js";
 import { nanoid } from "nanoid";
+import { logger } from "../logger/logger.js";
 // import base62 from "base62/index.js";
 
 async function getOriginalUrl(shortenUrl: string) {
@@ -15,7 +16,7 @@ async function getOriginalUrl(shortenUrl: string) {
         if(urlObj == null) {
             return null;
         }
-
+ 
         return urlObj;
 
     } catch (error) {
@@ -39,13 +40,20 @@ async function shortenUrl(originalUrl: string) {
                 shortenUrl: shortenUrl
             }
         });
-
-        console.log(urlObj);
         
         return urlObj;
     }
     catch(error) {
-        throw new Error("Error while shortening url");
+
+        let e = error as Error;
+
+        logger.error({
+            event:"URL_SHORTENING",
+            message: e.message,
+            stack: e.stack
+        })
+
+        throw error;
     }
 }
 
