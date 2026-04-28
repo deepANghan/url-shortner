@@ -3,11 +3,16 @@ import dotenv from "dotenv";
 import { urlRouter } from "./routes/urls.route.js";
 import { configs } from "./config/config.js";
 import { requestLogger } from "./middleware/requestLogger.js";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 const PORT = configs.PORT;
+
+app.use(cors({
+    origin: ["http://127.0.0.1:5500"]
+}));
 
 app.use(express.json());
 
@@ -15,17 +20,18 @@ app.use(requestLogger);
 
 app.use("/api/v1/url", urlRouter);
 
-app.use((req : Request, res : Response, next : NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
 
     res.status(404).json({
         status: "Not Found",
         message: "Route not found"
     })
 
-    return ;
+    return;
+
 });
 
-app.use((err : unknown, req : Request, res : Response, next : NextFunction) =>  {
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
 
     const error = err as Error;
 
