@@ -2,7 +2,7 @@ import { it, describe, expect, vi } from "vitest";
 import { getOriginalUrl, shortenUrl } from "../src/services/urls.service.js";
 
 vi.mock("../src/config/client", () => ({
-    prisma: {
+    dbClient: {
         urls: {
             create: vi.fn().mockResolvedValue({
                 originalUrl: "https://www.google.com",
