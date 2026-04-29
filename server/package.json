@@ -4,8 +4,9 @@
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
+    "build": "tsc",
     "dev": "tsc -b && node ./dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,9 @@
   },
   "devDependencies": {
     "dotenv": "^17.4.2",
-    "prisma": "^7.8.0"
+    "prisma": "^7.8.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.5"
   }
 }
