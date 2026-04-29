@@ -1,5 +1,18 @@
-import { it, describe, expect } from "vitest";
+import { it, describe, expect, vi } from "vitest";
 import { getOriginalUrl, shortenUrl } from "../src/services/urls.service.js";
+
+vi.mock("../prisma", () => ({
+    prisma: {
+        urls: {
+            create: vi.fn().mockResolvedValue({
+                originalUrl: "https://www.google.com",
+                shortUrl: "",
+                id: "123",
+                createdAt: "",
+            })
+        }
+    }
+}));
 
 describe("shortenUrl", () => {
 
