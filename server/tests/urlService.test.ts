@@ -1,7 +1,7 @@
 import { it, describe, expect, vi } from "vitest";
 import { getOriginalUrl, shortenUrl } from "../src/services/urls.service.js";
 
-vi.mock("../src/config/dbClient", () => ({
+vi.mock("../src/config/client", () => ({
     prisma: {
         urls: {
             create: vi.fn().mockResolvedValue({
