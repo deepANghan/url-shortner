@@ -41,6 +41,4 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     return;
 });
 
-app.listen(PORT, () => {
-    console.log(`App started on ${PORT}`);
-});
+app.listen(PORT, () => console.log(`App started on ${PORT}`));
