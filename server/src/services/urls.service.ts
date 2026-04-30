@@ -6,33 +6,30 @@ import { logger } from "../logger/logger.js";
 async function getOriginalUrl(shortenUrl: string) {
 
     try {
-        
+
         const urlObj = await dbClient.urls.findFirst({
             where: {
                 shortenUrl: shortenUrl
             }
         });
 
-        if(urlObj == null) {
+        if (urlObj == null) {
             return null;
         }
- 
+
         return urlObj;
 
     } catch (error) {
         throw new Error("Error while getting original url from shorten url");
     }
-
-
 }
 
 async function shortenUrl(originalUrl: string) {
-    
+
 
     const shortenUrl = nanoid(8);
 
-    try
-    {
+    try {
 
         const urlObj = await dbClient.urls.create({
             data: {
@@ -40,15 +37,15 @@ async function shortenUrl(originalUrl: string) {
                 shortenUrl: shortenUrl
             }
         });
-        
+
         return urlObj;
     }
-    catch(error) {
+    catch (error) {
 
         let e = error as Error;
 
         logger.error({
-            event:"URL_SHORTENING",
+            event: "URL_SHORTENING",
             message: e.message,
             stack: e.stack
         })

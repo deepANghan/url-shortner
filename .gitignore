@@ -1,2 +1,8 @@
 server/dist
 server/node_modules
+
+monitoring/grafana_data
+monitoring/prometheus_data
+monitoring/.env
+
+server/tests/performance
