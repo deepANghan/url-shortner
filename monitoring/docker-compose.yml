@@ -19,3 +19,17 @@ services:
     ports: ["9187:9187"]
     env_file:
       - .env
+  
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - "./prometheus/promtail.yml:/etc/promtail/config.yml"
+      - "../server/logs/:/var/log/url-shortener"
+    depends_on:
+      - loki
+
+  loki:
+    image: grafana/loki:latest
+    ports: ["3100:3100"]
+    volumes:
+      - "./loki_data:/loki"
