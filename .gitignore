@@ -4,5 +4,6 @@ server/node_modules
 monitoring/grafana_data
 monitoring/prometheus_data
 monitoring/.env
+monitoring/loki_data
 
 server/tests/performance
