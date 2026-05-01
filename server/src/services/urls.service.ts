@@ -2,10 +2,22 @@ import { dbClient } from "../config/client.js";
 import { nanoid } from "nanoid";
 import { logger } from "../logger/logger.js";
 // import base62 from "base62/index.js";
+import { redisClient } from "../config/redisClient.js";
 
 async function getOriginalUrl(shortenUrl: string) {
 
     try {
+
+        let url = await redisClient.get(`url:${shortenUrl}`);
+
+        console.log(`Redis url: ${url}`);
+
+        if (url) {
+            return {
+                shortenUrl: shortenUrl,
+                originalUrl: url
+            };
+        }
 
         const urlObj = await dbClient.urls.findFirst({
             where: {
@@ -16,6 +28,10 @@ async function getOriginalUrl(shortenUrl: string) {
         if (urlObj == null) {
             return null;
         }
+
+        await redisClient.set(`url:${shortenUrl}`, urlObj.originalUrl, {
+            EX: 3600
+        });
 
         return urlObj;
 

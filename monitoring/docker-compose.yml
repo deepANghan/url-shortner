@@ -3,7 +3,7 @@ services:
     image: prom/prometheus:latest
     ports: ["9090:9090"]
     volumes:
-      - "./prom/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
       - "./prometheus_data:/prometheus"
   
   grafana:

@@ -4,6 +4,8 @@ import { urlRouter } from "./routes/urls.route.js";
 import { configs } from "./config/config.js";
 import { requestLogger } from "./middleware/requestLogger.js";
 import cors from "cors";
+import { redisClient } from "./config/redisClient.js";
+import { dbClient } from "./config/client.js";
 
 dotenv.config();
 
@@ -42,3 +44,10 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.listen(PORT, () => console.log(`App started on ${PORT}`));
+
+process.on("SIGINT", async () => {
+    console.log("Server stopped");
+    await redisClient.quit();
+    await dbClient.$disconnect();
+    process.exit(0);
+});

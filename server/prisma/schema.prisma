@@ -12,8 +12,8 @@ datasource db {
 }
 
 model urls {
-  urlId   Int     @id     @default(autoincrement())
-  originalUrl   String
-  shortenUrl    String
-  createdAt     DateTime  @default(now())
+  urlId       Int      @id @default(autoincrement())
+  originalUrl String
+  shortenUrl  String   @unique
+  createdAt   DateTime @default(now())
 }
