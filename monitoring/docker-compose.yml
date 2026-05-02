@@ -24,7 +24,7 @@ services:
     image: grafana/promtail:latest
     volumes:
       - "./prometheus/promtail.yml:/etc/promtail/config.yml"
-      - "../server/logs/:/var/log/url-shortener"
+      - "../backend/server/logs/:/var/log/url-shortener"
     depends_on:
       - loki
 
