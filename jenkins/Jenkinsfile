@@ -1,0 +1,62 @@
+pipeline {
+
+    agent any;
+
+    triggers {
+        pollSCM("* * * * *")
+    }
+
+    stages {
+
+        stage("Checkout") {
+            steps {
+                echo "Checking Out the code from GitHub."
+                checkout scm
+            }
+        }
+
+        stage("Install Dependencies") {
+            agent {
+                docker {
+                    image 'node:22-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                dir("backend/server") {
+                    echo "Installing node dependencies."
+                    sh 'npm install'    
+                }
+            }
+        }
+
+        stage("Test") {
+            agent {
+                docker {
+                    image 'node:22-alpine'
+                    reuseNode true
+                }
+            }
+            steps {
+                dir("backend/server") {
+                    echo "Running test."
+                    sh 'npm run test'
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            echo "Pipeline completed."
+        }
+        failure {
+            echo "Pipeline failed."
+        }
+        success {
+            echo "Pipeline succeeded."
+        }
+    }
+
+}
